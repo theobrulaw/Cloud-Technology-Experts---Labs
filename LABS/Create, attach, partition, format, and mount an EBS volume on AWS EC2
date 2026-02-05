@@ -1,56 +1,25 @@
 Lab: Create, attach, partition, format, and mount an EBS volume on AWS EC2
 Prerequisites
-An AWS account and permissions to create/attach volumes (EC2: CreateVolume, AttachVolume).
-
-
-An EC2 instance running (RHEL/CentOS/Ubuntu/Amazon Linux) in a specific Availability Zone (AZ).
-
-
-sudo access on the EC2 instance.
-
-
+-An AWS account and permissions to create/attach volumes (EC2: CreateVolume, AttachVolume).
+-An EC2 instance running (RHEL/CentOS/Ubuntu/Amazon Linux) in a specific Availability Zone (AZ).
+-sudo access on the EC2 instance.
 
 Lab objective
-Create a new 1 GiB EBS volume in the same AZ as your instance.
-
-
-Attach it to the running EC2 instance.
-
-
-Partition the device, create a filesystem (ext4 and XFS examples), mount it at /mnt/data.
-
-
-Make the mount persistent across reboots using /etc/fstab.
-
-
-
+-Create a new 1 GiB EBS volume in the same AZ as your instance.
+-Attach it to the running EC2 instance.
+-Partition the device, create a filesystem (ext4 and XFS examples), mount it at /mnt/data.
+-Make the mount persistent across reboots using /etc/fstab.
 
 Part A — Create & attach the EBS volume
 Option 1 — Using the AWS Console
-Go to EC2 → Volumes → Create volume.
-
-
-Choose:
-
-
-Size: 1GiB
-
-
-Volume type: gp3 (or gp2, io2, etc.)
-
-
-Availability Zone: must match the AZ of your instance (e.g., us-east-1a)
-
-
-Encryption: (optional)
-
-
-Click Create volume.
-
-
-Select the new volume → Actions → Attach volume → choose your running instance and device name (for example /dev/sdf) → Attach.
-
-
+1. Go to EC2 → Volumes → Create volume.
+2. Choose:
+-Size: 1GiB
+-Volume type: gp3 (or gp2, io2, etc.)
+-Availability Zone: must match the AZ of your instance (e.g., us-east-1a)
+-Encryption: (optional)
+3. Click Create volume.
+4. Select the new volume → Actions → Attach volume → choose your running instance and device name (for example /dev/sdf) → Attach.
 
 Part B — Detect the new device on the EC2 instance
 SSH to your instance and run:
@@ -66,8 +35,10 @@ After attaching, you might see /dev/xvdf or /dev/nvme1n1. Identify the new devic
 
 Part C — Partition the device
 Note: You can use the entire disk without a partition table (mkfs directly on device), but many prefer to create a single partition (/dev/xvdf1 or /dev/nvme1n1p1), so the example creates a single partition.
+
 Using parted (scriptable)
 Replace /dev/xvdf with your device (or /dev/nvme1n1):
+
 # Example device variable; set this to the device found with lsblk
 DEV=/dev/xvdf     # OR /dev/nvme1n1
 
@@ -82,6 +53,7 @@ If your device is NVMe the partition will be like /dev/nvme1n1p1. If it is xvdf 
 
 Part D — Format the partition with a filesystem
 Two common choices: ext4 or xfs. Choose one.
+
 ext4
 # adjust to your partition name:
 PART=${DEV}1           # e.g., /dev/xvdf1 or /dev/nvme1n1p1
@@ -96,6 +68,7 @@ sudo blkid $PART
 blkid will print the UUID. You’ll use that when creating /etc/fstab.
 
 Part E — Create mountpoint & mount the filesystem
+
 sudo mkdir -p /mnt/data
 # mount now
 sudo mount $PART /mnt/data
@@ -107,12 +80,14 @@ lsblk -f
 
 Part F — Set ownership & permissions
 Example: give ec2-user (or your app user) ownership:
+
 sudo chown ec2-user:ec2-user /mnt/data
 sudo chmod 750 /mnt/data
 
 
 Part G — Make mount persistent (use UUID in /etc/fstab)
 Get the UUID of the partition:
+
 sudo blkid $PART
 # Sample output: /dev/xvdf1: UUID="1234-ABCD" TYPE="ext4" ...
 
