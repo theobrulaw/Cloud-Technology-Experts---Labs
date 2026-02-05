@@ -1,0 +1,182 @@
+Lab: Create and Manage an S3 Bucket in AWS
+Objective
+By the end of this lab, you will be able to:
+Create and configure an Amazon S3 bucket.
+
+
+Upload and manage objects.
+
+
+Set bucket permissions and policies.
+
+
+Enable versioning and understand its purpose.
+
+
+Access your bucket via AWS CLI.
+
+
+
+Prerequisites
+An AWS Account (Free Tier is fine).
+
+
+A configured IAM user with AmazonS3FullAccess permissions.
+
+
+Basic understanding of AWS regions and S3 storage classes.
+
+
+
+Lab Sections
+Step 1: Log in to the AWS Management Console
+Go to https://aws.amazon.com/console/.
+
+
+Log in using your IAM user credentials (not the root account).
+
+
+From the Services menu, select S3 under “Storage”.
+
+
+
+Step 2: Create a New S3 Bucket (Console)
+Click “Create bucket”.
+
+
+Bucket name: Must be globally unique. Example:
+
+ my-first-s3-lab-bucket-damian
+
+Region: Choose a region close to you (e.g., us-east-1).
+
+
+Block Public Access settings:
+
+
+Leave all boxes checked to block public access (recommended for private buckets).
+
+
+For testing a static website, you can uncheck “Block all public access” — but only do this in a non-production environment.
+
+
+Bucket Versioning:
+
+
+Enable Versioning to keep multiple versions of objects (optional but recommended for this lab).
+
+
+Encryption:
+
+
+Choose Amazon S3-managed keys (SSE-S3).
+
+
+Scroll down and click Create bucket.
+
+
+✅ Your bucket is now created.
+
+Step 3: Upload Files to the Bucket
+Click the bucket name to open it.
+
+
+Click Upload → Add files → Choose any local file (e.g., a .txt or .jpg).
+
+
+Click Upload.
+
+
+Once uploaded, you’ll see your object in the bucket list.
+
+Step 4: Test Object Access and Permissions
+Click on the uploaded file.
+
+
+Under Object URL, copy the link.
+
+
+Open the link in a browser — if public access is blocked, you’ll see:
+
+ AccessDenied
+
+(Optional) To make an object public:
+
+
+Select the object → Actions → Make public using ACL.
+
+
+Reopen the object URL — you should now see the content.
+
+
+⚠️ Only make files public when you understand the security implications.
+
+Step 5: Enable Bucket Versioning (if not already enabled)
+Go to your bucket’s Properties tab.
+
+
+Scroll to Bucket Versioning → click Edit → Enable versioning.
+
+
+Save changes.
+
+
+Now, if you upload a new file with the same name, the old version remains stored and retrievable.
+To view:
+Go to Objects → click Show versions.
+
+
+
+Step 6: Create a Folder (Prefix)
+In S3, folders are actually key prefixes.
+In your bucket, click Create folder.
+
+
+Enter name: project-files/
+
+
+Upload files into this folder to see how S3 organizes them using key paths.
+
+
+
+Step 7: Apply a Bucket Policy (Optional)
+To make the entire bucket publicly readable (⚠️ for demo only):
+Go to Permissions → Bucket policy.
+
+
+Paste the following (replace the bucket name):
+
+ {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-first-s3-lab-bucket-damian/*"
+    }
+  ]
+}
+
+Save changes and confirm warning.
+
+
+Now you can access objects via their URLs.
+
+
+
+Key Takeaways
+S3 is object storage, not block or file storage.
+
+
+Buckets are global namespace — bucket names must be unique.
+
+
+Versioning helps recover from accidental deletions.
+
+
+Bucket policies and ACLs control access.
+
+
+AWS CLI is essential for automation and scriptin
