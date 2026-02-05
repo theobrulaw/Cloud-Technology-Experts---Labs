@@ -1,0 +1,340 @@
+Project 1: Step-by-step guide to creating a website on
+Amazon Linux AMI on AWS
+Project description: We will deploy a Learning Management System (LMS) in the
+AWS cloud platform.
+Here is the topology diagram using the Default VPC.
+
+In this project,
+These services already exist:
+- Region
+- Default VPC
+- Internet Gateway
+
+Cloud Technology Academy – Copyright Reserved-2024 1
+
+- VPC Subnets
+
+We will create the following components/services:
+
+- An EC2 Instance
+- A Load Balancer
+- The autoscaler (Autoscaling)
+- And Rote53 (optional)
+- ACM Certificate to make our website secure (if you done Route53)
+
+Part 1: Creating an EC2 with Amazon Linux AMI
+Here are the steps to create an EC2 with Amazon Linux AMI
+1. Create a key pair
+2. Create an EC2 instance with Amazon Linux AMI
+3. Connect to the EC2 instance
+4. Install Apache Webserver using Linux commands from the CLI (Command Line
+Interface)
+5. Test that you can access the website
+6. Install git
+7. Use git to clone the edukate website from Git Repository &
+move edukate to the right location for Apache to access it
+8. Access your website from the web browser
+9. Create AMI (Amazon Machine Image)
+10. Cleanup
+Step 1: Create a key pair
+Creating keypair is essential for securely accessing your EC2 instances. You need a
+keypair to login to an EC2 instance.
+The keypair is acting like your password but considered more secure than using
+passwords.
+Whenever you create a key pair, two keys are created: the public key and the private
+key. The private key is automatically downloaded to your laptop. Save this key
+securely. You will need it from time to time.
+Here's a step-by-step guide on how to create key pairs in AWS:
+
+Cloud Technology Academy – Copyright Reserved-2024 2
+
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Network & Security Section
+- Click on Key Pairs
+3. Create a New Key Pair
+- Click the Create key pair button in orange color.
+4. Configure Key Pair Settings
+
+- Name: Use key1 as the name.
+Enter a name for your key pair in the Key pair name field. Choose a descriptive name
+that helps you remember its purpose. You can use
+- key pair type: (don’t change)
+- RSA or ED25519. RSA is more widely used, but ED25519 is a newer and more secure
+
+option-
+Private key file format ( don't change):
+
+- PEM is for use with OpenSSH or PuTTY.
+- PPK if you are using PuTTY on Windows.
+Click Create key pair at the bottom of the screen.
+5. Download the Key Pair
+Cloud Technology Academy – Copyright Reserved-2024 3
+
+- Your browser will automatically download the private key file (`key1.pem` or `key2.ppk`
+depending on your selection). Save this file securely, you will need it to access your
+EC2 instances.
+- Losing this file means you will not be able to access your EC2 instances associated
+with this key pair.
+- AWS will not keep a copy of the key( public key)
+.
+6. Use the Key Pair
+- When launching a new EC2 instance, you will be prompted to select an existing key
+pair. Choose the key pair you created to access your instance securely.
+
+That’s it! You’ve successfully created a key pair on AWS.
+Step 2: Create an EC2 instance with Amazon Linux AMI
+Here’s a step-by-step guide to create an EC2 instance with Amazon Linux AMI on AWS:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Launch Instance
+- Click on the “Launch Instance” button in orange color.
+4. Name and Tags. Give a Name to the instance. For example, VM1
+5. Application and OS images (Amazon Machine Image). The default is Amazon Linux.
+Don’t change it.
+6. Instance Type. The default is t2.micro. Don’t change it.
+7. Key pair (login). Select the keypair you created in step 1. The name of the key should
+be key1
+8. Network settings. Look for Firewall (security groups)
+check http to look like below:
+
+Cloud Technology Academy – Copyright Reserved-2024 4
+
+9. Configure Storage. Leave the default. Don't change anything here.
+10. Click “Launch Instance”.
+11. Wait for the instance to be ready
+Congratulations, you have created an EC2 instance.
+
+Step 3: Connect to the EC2 instance from the
+Management console
+To connect to a Linux EC2 instance from the AWS Management Console, follow these
+steps:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to connect to. You will see the name as VM1.
+Select the square button.
+
+5. Connect to the Instance:
+- Click on the Connect button at the top of the page.
+- A pop-up window will appear with connection options.
+Cloud Technology Academy – Copyright Reserved-2024 5
+
+- click connect at the bottom of the page
+- This will open a new browser-based terminal session.
+6. The Linux terminal
+
+Congratulations, you have connected to your Linux instance. We are going to type
+Linux commands on the black terminal. Don't worry about what the commands mean
+at this stage, but shortly, we will be learning Linux.
+Note: The reason you create Linux servers is to host an application. Below, we are
+going to host a website.
+
+Step 4: Install Apache Webserver using Linux commands
+from the CLI (Command Line Interface)
+
+What is Apache server?
+Apache is a very popular Linux web server. It helps you to host a website on a server
+so that your customers can access the website running on Apache.
+Here is the website for Apache:
+https://www.apache.org/
+
+Here are step-by-step instructions to install Apache on an Amazon EC2 instance
+running Amazon Linux:
+The commands you need to type (or copy and paste) are in green color.
+1. Perform the following from browser-based terminal session(CLI) in the previous step
+(step 3)
+Cloud Technology Academy – Copyright Reserved-2024 6
+
+2. Update Package Repository
+- Update the package repository to ensure you have the latest package lists:
+sudo yum update -y
+3. Install Apache HTTP Server
+- Install the Apache HTTP server using the `yum` package manager:
+sudo yum install httpd -y
+4. Start Apache Service
+- Start the Apache service:
+sudo systemctl start httpd
+5. Enable Apache to Start on Boot
+- Configure Apache to start automatically when the instance boots:
+sudo systemctl enable httpd
+
+Step 5: Test that you can access the Apache default
+website page
+1. Obtain the Public IPv4 address of your EC2 instance
+- Click here
+https://us-east-1.console.aws.amazon.com/ec2/
+- Select your instance.
+- Copy the Public IPv4 address at the lower section of the screen
+
+2. Put the public IP address on a web browser, and you will see the default Apache
+home page
+
+Cloud Technology Academy – Copyright Reserved-2024 7
+
+3. (Optional) Modify the Apache Default Page
+- You can edit the default Apache page by modifying the `/var/www/html/index.html`
+file:
+- use an editor called nano to open the index.html page
+sudo nano /var/www/html/index.html
+- Make your changes: put the following in the text editor
+I am becoming a cloud guru
+- save the file. Press the 2 keys together. This is letter O of the alphabet
+ctlr+O
+- Exit the editor. Press the 2 keys together. This is letter X of he alphabet
+ctlr+X
+- Ensure you have exited nano
+- refresh your browser with the IP address of your default apache page to see
+the updates. You will see
+
+Cloud Technology Academy – Copyright Reserved-2024 8
+
+That’s it! You’ve successfully installed and started Apache on your Amazon EC2
+instance.
+
+Step 6: Install git
+What is git?
+Git is a version control system. It is a very important tool used by almost every
+company in the world. Git helps you to maintain di
+
+erent versions of your application.
+Git is used with GitHub. Here is a link to GitHub and feel free to create a free account
+as you will need it later in this course.
+https://github.com/
+
+1. Install Git on the Linux terminal (the black screen)
+sudo yum update -y
+sudo yum install git -y
+2. Test that git is installed
+git --version
+Output: Yours will be similar to below
+git version 2.47.1
+
+Step 7: Clone the edukate website from Git Repository
+Here’s a step-by-step guide to clone a repository from GitHub:
+
+Cloud Technology Academy – Copyright Reserved-2024 9
+
+1. Clone the Repository
+- Run the `git clone` command followed by the URL you copied:
+git clone https://github.com/igbedo/edukate.git
+2. Copy the repo files to the location where Apache webserver will server the files
+sudo mv edukate/* /var/www/html/
+
+That’s it! You’ve successfully cloned the edukate repository from GitHub.
+8. Access the edukate website from the browser
+- Refresh your browser with the IP address of your default Apache page to see
+the updates. Or follow 1 and 2 in step 5 above.
+- You will see the edukate website
+
+Cloud Technology Academy – Copyright Reserved-2024 10
+
+Step 9: Create AMI (Amazon Machine Image)
+Why Create an AMI?
+At this point, we have the edukate website deployed. We want to save our work so
+that we don't have to do all the above steps each time. The AMI is a way to save
+our work in AWS.
+Creating an AMI from an EC2 instance allows you to:
+1. Backup: Preserve the state of your instance, including its configuration,
+applications, and data.
+2. Scaling: Quickly launch new instances with the same configuration. Wer will use
+this later.
+
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to connect to. You will see the name as VM1.
+Select the square button.
+
+5. Create an AMI:
+1. With the instance selected, click the Actions button.
+2. Select image and template
+3. Select create image
+○ Image name: Enter edukate
+○ Image description: my first AMI containing edukate website
+
+Cloud Technology Academy – Copyright Reserved-2024 11
+
+4. Click Create image. AWS will start the process of creating the AMI.
+5. It will take a few minutes for your image to be ready
+5. See your new image
+On the left navigation page:
+1. - Go to Images Section
+2. - Click on AMIs
+3. You will see your image listed
+4. Check that the status says Available before proceeding to the next section
+6. Create another EC2 instance from Your AMI
+Once your AMI is available:
+● Check your image
+● Click Launch Instance from AMI
+● Here are the summary of the important steps. If you need more help, refer
+to Step 2: Create an EC2 instance with Amazon Linux AMI
+○ Name and tags (use edulate)
+○ Key pair (login)- select your key
+○ Firewall (security groups) - check http
+● Click launch instance
+
+7. Access the new edukate website from the browser
+- Follow 1 and 2 in Step 5: Test that you can access the Apache default
+website page
+
+Step 10: Clean up: Delete your EC2 instance
+It's good practice to always clean up after your lab exercises. If you don't clean up,
+you could exceed your monthly quota and get charged. Be warned!
+However, not every thing/service you create gets charged, so I will let you know
+what to delete after every class.
+For this part of the project, you need to delete EC2 instances.
+To delete EC2, do the following:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+
+Cloud Technology Academy – Copyright Reserved-2024 12
+
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to delete
+4. Click Instance state at the top
+5. Select Terminate(delete) instance
+6. Click Terminate (delete) at the bottom of the screen
+7. Your instance will be deleted. This will take a few minutes, and it will still appear in
+your dashboard.
+8. Ensure that the Instance state says ‘Terminated’
+
+9. Delete any remaining instances by following the above steps.
+
+Conclusion
+Congratulations, you have completed part 1 of this project. You were able to do the
+following:
+1. Create a key pair
+2. Create an EC2 instance with Amazon Linux AMI
+3. Connect to the EC2 instance
+4. Install Apache Webserver using Linux commands from the CLI (Command Line
+Interface)
+5. Test that you can access the website
+6. Install git
+7. Use git to clone the edukate website from the Git Repository
+8. Move edukate to the right location for Apache to access it
+9. Access your website from the web browser
+10. Create AMI (Amazon Machine Image)
