@@ -1,0 +1,64 @@
+TWC WIOA Monthly Training Activity Report
+Participant: Theodore Lawrence
+Program: WIOA Training
+Training Provider: Cloud Technology Experts / CNCF
+Reporting Month: December 2025
+________________________________________
+Monthly Summary
+During December 2025, training activities focused on developing core Linux system administration skills essential for cloud, DevOps, and cybersecurity career pathways. Instruction emphasized Linux fundamentals, command-line navigation, file and directory management, file permissions, and user administration. Training sessions combined conceptual instruction with hands-on demonstrations using AWS EC2 instances and Ubuntu Linux virtual machines.
+No training sessions were conducted during the weeks beginning December 21, 2025 and December 28, 2025 due to the holiday break.
+________________________________________
+Weekly Activity Breakdown
+________________________________________
+Week of December 1–5, 2025
+Training Activity Conducted
+Training during this week introduced Linux fundamentals and command-line concepts, providing a foundation for subsequent system administration topics. Instruction focused on understanding operating systems and the role Linux plays in enterprise, cloud, and server environments.
+Key skills and topics included:
+•	Overview of operating systems (Windows, macOS/Unix, Linux)
+•	Importance of Linux in server and cloud environments
+•	Introduction to the Linux terminal and command-line interface (CLI)
+•	Understanding the Linux file system structure
+•	Navigating directories using cd, pwd, and ls
+•	Creating and managing files and directories using touch and mkdir
+•	Differences between GUI-based systems and CLI-only environments
+Hands-on demonstrations were conducted using Ubuntu Linux and AWS EC2 instances to reinforce foundational concepts and command usage.
+________________________________________
+Week of December 8, 2025
+Training Activity Conducted
+This week expanded on Linux fundamentals with deeper focus on file system navigation and directory management. Students practiced executing commands and managing files across both local virtual machines and cloud-based Linux servers.
+Key skills and topics included:
+•	Linux file system hierarchy and root directory concepts
+•	Advanced directory navigation techniques
+•	Viewing hidden files and detailed listings (ls -a, ls -l, ls -al)
+•	Creating nested directory structures using mkdir -p
+•	Removing files and directories safely (rm, rmdir)
+•	Understanding administrative privileges and the sudo command
+•	Introduction to basic user management concepts
+The training reinforced the importance of precision and caution when working in Linux environments, particularly when using recursive and force commands.
+________________________________________
+Week of December 15, 2025
+Training Activity Conducted
+Training during this week focused on Linux file permissions and user management, emphasizing system security and access control best practices.
+Key skills and topics included:
+•	Reading and interpreting Linux permission strings
+•	Understanding permission groups: User, Group, and Others (UGO)
+•	Modifying permissions using:
+o	Octal (numeric) method (chmod 755, chmod 777)
+o	Symbolic method (chmod g+r, chmod o-w)
+•	Understanding default permissions and the umask value
+•	Managing users with useradd, adduser, passwd, and userdel
+•	Overview of system files such as /etc/passwd and /etc/shadow
+•	Importance of administrator privileges and secure user access
+Hands-on demonstrations helped solidify how permissions and user roles impact system security and operational integrity.
+________________________________________
+Week of December 21, 2025
+No Training Activity
+No training sessions were held this week due to the holiday break.
+________________________________________
+Week of December 28, 2025
+No Training Activity
+No training sessions were held this week due to the holiday break.
+________________________________________
+Overall Progress
+Throughout December 2025, training activities strengthened essential Linux competencies that directly support career pathways in Cloud Operations, DevOps, and Cybersecurity. The progression from foundational concepts to permissions and user management provided a strong technical base for more advanced infrastructure, automation, and security topics in future training sessions.
+
