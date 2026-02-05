@@ -6,7 +6,6 @@ An AWS account and permissions to create/attach volumes (EC2: CreateVolume, Atta
 An EC2 instance running (RHEL/CentOS/Ubuntu/Amazon Linux) in a specific Availability Zone (AZ).
 
 
-
 sudo access on the EC2 instance.
 
 
