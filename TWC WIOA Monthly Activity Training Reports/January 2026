@@ -5,107 +5,27 @@ Training Provider: Cloud Technology Experts
 Training Program: Cloud/DevOps Engineering
 Reporting Month: January 2026
 Instructor: Dr. Damian Igbe, PhD
-Submitted To: Ms. Crystal Norwood, TWC WIOA Case Worker
+Submitted To: Ms. Crystal Norwood
 
-Monthly Training Overview
+Week of January 10, 2026
+Training Focus: Linux Package Management & System Administration
 
-During January 2026, I participated in intensive cloud engineering and Linux systems training focused on AWS infrastructure, storage services, networking fundamentals, and system administration best practices. The training combined instructor-led lectures, live demonstrations, troubleshooting scenarios, and hands-on implementation to reinforce real-world cloud operations skills.
+During this week, training focused on Ubuntu Linux fundamentals with emphasis on package management using APT. Instruction covered command syntax, troubleshooting errors, updating repositories, installing and removing software packages, cleaning cached files and unused dependencies, and managing services using systemctl. Additional concepts included command piping with grep and understanding localhost networking behavior. Hands-on exercises reinforced full package lifecycle management and service verification.
 
-Instruction emphasized building, securing, troubleshooting, and maintaining scalable cloud environments using AWS services and Linux operating systems.
+Week of January 17, 2026
+Training Focus: AWS Troubleshooting, DNS, Load Balancing & HTTPS Security
 
-Training Activities Completed
-Linux Systems & Package Management
+This week emphasized real-world AWS infrastructure troubleshooting, including EC2 connectivity validation, Route 53 DNS configuration, Application Load Balancer target health analysis, and removal of misconfigured resources. Training included creation of hosted zone records, domain-to-load balancer mapping, and SSL certificate implementation using AWS Certificate Manager to enable HTTPS traffic. Practical exercises reinforced systematic diagnostics and secure cloud architecture design.
 
-Practiced Ubuntu package management using APT
+Week of January 24, 2026
+Training Focus: AWS Storage Services & S3 Static Website Hosting
 
-Installed, verified, removed, and cleaned software packages
+During this week, training centered on Elastic Block Store (EBS) volume creation and integration with EC2 instances, including disk partitioning, formatting, mounting, and persistent data verification. Instruction also covered AWS S3 static website configuration, troubleshooting access permissions, and applying bucket policies for public access. These activities reinforced cloud storage administration and secure content hosting.
 
-Managed repositories and system cache
+Week of January 31, 2026
+Training Focus: Networking Fundamentals & AWS VPC Architecture
 
-Used grep and command piping for output filtering
+The final week of January focused on foundational networking concepts using the OSI Reference Model and TCP/IP communication principles. Training concluded with hands-on creation of AWS Virtual Private Cloud (VPC) environments, including CIDR planning, public and private subnet segmentation, route table configuration, and Internet Gateway implementation. Practical validation exercises reinforced secure and scalable cloud network design.
 
-Controlled services using systemctl
-
-AWS Compute & Architecture
-
-Launched and configured EC2 instances
-
-Installed and configured Apache web servers
-
-Created AMIs for backup and recovery
-
-Designed scalable architecture using Load Balancers and Auto Scaling concepts
-
-Cloud Troubleshooting & Security
-
-Diagnosed DNS resolution and connectivity issues
-
-Configured Route 53 hosted zones and A records
-
-Verified load balancer target health
-
-Implemented HTTPS using AWS Certificate Manager
-
-Practiced systematic infrastructure troubleshooting
-
-AWS Storage Services
-
-Created and attached EBS volumes
-
-Partitioned and formatted disks using Linux tools
-
-Mounted and unmounted file systems
-
-Verified persistent data storage
-
-Reviewed snapshot backup concepts
-
-Configured S3 static website hosting and bucket policies
-
-Networking Fundamentals & VPC Design
-
-Studied OSI Reference Model and TCP/IP concepts
-
-Analyzed packet flow across network layers
-
-Designed and built AWS VPC architectures
-
-Created public and private subnets
-
-Configured route tables and Internet Gateways
-
-Implemented network isolation and security segmentation
-
-Skills Developed
-
-Linux system administration and troubleshooting
-
-Package management lifecycle using APT
-
-AWS EC2 provisioning and AMI management
-
-Cloud storage implementation (EBS & S3)
-
-DNS configuration and HTTPS security
-
-OSI model and networking fundamentals
-
-AWS VPC architecture and subnet design
-
-Infrastructure troubleshooting methodology
-
-Progress & Learning Outcomes
-
-Throughout January 2026, I significantly strengthened my technical foundation in cloud infrastructure and Linux operations. Hands-on practice reinforced how compute, storage, and networking components integrate within AWS environments to support secure and scalable applications. The training improved my confidence in troubleshooting real-world cloud issues, managing Linux systems, and designing production-ready architectures aligned with industry best practices.
-
-Planned Next Steps
-
-Continue advanced VPC networking and automation modules
-
-Implement scaling and monitoring solutions
-
-Expand static website portfolio projects
-
-Practice infrastructure troubleshooting scenarios
-
-Prepare for cloud automation and DevOps workflows
+Participant Signature: ___________________________
+Date: ___________________
