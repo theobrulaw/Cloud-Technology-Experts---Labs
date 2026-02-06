@@ -1,0 +1,676 @@
+Project 1: Step-by-step guide to creating a website on
+Amazon Linux AMI on AWS
+Project description: We will deploy a Learning Management System (LMS) in the
+AWS cloud platform.
+Here is the topology diagram using the Default VPC.
+
+In this project,
+These services already exist:
+- Region
+- Default VPC
+- Internet Gateway
+
+Cloud Technology Academy – Copyright Reserved-2024 1
+
+- VPC Subnets
+
+We will create the following components/services:
+
+- An EC2 Instance
+- A Load Balancer
+- The autoscaler (Autoscaling)
+- And Rote53 (optional)
+- ACM Certificate to make our website secure (if you done Route53)
+
+Part 1: Creating an EC2 with Amazon Linux AMI
+Here are the steps to create an EC2 with Amazon Linux AMI
+1. Create a key pair
+2. Create an EC2 instance with Amazon Linux AMI
+3. Connect to the EC2 instance
+4. Install Apache Webserver using Linux commands from the CLI (Command Line
+Interface)
+5. Test that you can access the website
+6. Install git
+7. Use git to clone the edukate website from Git Repository &
+move edukate to the right location for Apache to access it
+8. Access your website from the web browser
+9. Create AMI (Amazon Machine Image)
+10. Cleanup
+Step 1: Create a key pair
+Creating keypair is essential for securely accessing your EC2 instances. You need a
+keypair to login to an EC2 instance.
+The keypair is acting like your password but considered more secure than using
+passwords.
+Whenever you create a key pair, two keys are created: the public key and the private
+key. The private key is automatically downloaded to your laptop. Save this key
+securely. You will need it from time to time.
+Here's a step-by-step guide on how to create key pairs in AWS:
+
+Cloud Technology Academy – Copyright Reserved-2024 2
+
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Network & Security Section
+- Click on Key Pairs
+3. Create a New Key Pair
+- Click the Create key pair button in orange color.
+4. Configure Key Pair Settings
+
+- Name: Use key1 as the name.
+Enter a name for your key pair in the Key pair name field. Choose a descriptive name
+that helps you remember its purpose. You can use
+- key pair type: (don’t change)
+- RSA or ED25519. RSA is more widely used, but ED25519 is a newer and more secure
+
+option-
+Private key file format ( don't change):
+
+- PEM is for use with OpenSSH or PuTTY.
+- PPK if you are using PuTTY on Windows.
+Click Create key pair at the bottom of the screen.
+5. Download the Key Pair
+Cloud Technology Academy – Copyright Reserved-2024 3
+
+- Your browser will automatically download the private key file (`key1.pem` or `key2.ppk`
+depending on your selection). Save this file securely, you will need it to access your
+EC2 instances.
+- Losing this file means you will not be able to access your EC2 instances associated
+with this key pair.
+- AWS will not keep a copy of the key( public key)
+.
+6. Use the Key Pair
+- When launching a new EC2 instance, you will be prompted to select an existing key
+pair. Choose the key pair you created to access your instance securely.
+
+That’s it! You’ve successfully created a key pair on AWS.
+Step 2: Create an EC2 instance with Amazon Linux AMI
+Here’s a step-by-step guide to create an EC2 instance with Amazon Linux AMI on AWS:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Launch Instance
+- Click on the “Launch Instance” button in orange color.
+4. Name and Tags. Give a Name to the instance. For example, VM1
+5. Application and OS images (Amazon Machine Image). The default is Amazon Linux.
+Don’t change it.
+6. Instance Type. The default is t2.micro. Don’t change it.
+7. Key pair (login). Select the keypair you created in step 1. The name of the key should
+be key1
+8. Network settings. Look for Firewall (security groups)
+check http to look like below:
+
+Cloud Technology Academy – Copyright Reserved-2024 4
+
+9. Configure Storage. Leave the default. Don't change anything here.
+10. Click “Launch Instance”.
+11. Wait for the instance to be ready
+Congratulations, you have created an EC2 instance.
+
+Step 3: Connect to the EC2 instance from the
+Management console
+To connect to a Linux EC2 instance from the AWS Management Console, follow these
+steps:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to connect to. You will see the name as VM1.
+Select the square button.
+
+5. Connect to the Instance:
+- Click on the Connect button at the top of the page.
+- A pop-up window will appear with connection options.
+Cloud Technology Academy – Copyright Reserved-2024 5
+
+- click connect at the bottom of the page
+- This will open a new browser-based terminal session.
+6. The Linux terminal
+
+Congratulations, you have connected to your Linux instance. We are going to type
+Linux commands on the black terminal. Don't worry about what the commands mean
+at this stage, but shortly, we will be learning Linux.
+Note: The reason you create Linux servers is to host an application. Below, we are
+going to host a website.
+
+Step 4: Install Apache Webserver using Linux commands
+from the CLI (Command Line Interface)
+
+What is Apache server?
+Apache is a very popular Linux web server. It helps you to host a website on a server
+so that your customers can access the website running on Apache.
+Here is the website for Apache:
+https://www.apache.org/
+
+Here are step-by-step instructions to install Apache on an Amazon EC2 instance
+running Amazon Linux:
+The commands you need to type (or copy and paste) are in green color.
+1. Perform the following from browser-based terminal session(CLI) in the previous step
+(step 3)
+Cloud Technology Academy – Copyright Reserved-2024 6
+
+2. Update Package Repository
+- Update the package repository to ensure you have the latest package lists:
+sudo yum update -y
+3. Install Apache HTTP Server
+- Install the Apache HTTP server using the `yum` package manager:
+sudo yum install httpd -y
+4. Start Apache Service
+- Start the Apache service:
+sudo systemctl start httpd
+5. Enable Apache to Start on Boot
+- Configure Apache to start automatically when the instance boots:
+sudo systemctl enable httpd
+
+Step 5: Test that you can access the Apache default
+website page
+1. Obtain the Public IPv4 address of your EC2 instance
+- Click here
+https://us-east-1.console.aws.amazon.com/ec2/
+- Select your instance.
+- Copy the Public IPv4 address at the lower section of the screen
+
+2. Put the public IP address on a web browser, and you will see the default Apache
+home page
+
+Cloud Technology Academy – Copyright Reserved-2024 7
+
+3. (Optional) Modify the Apache Default Page
+- You can edit the default Apache page by modifying the `/var/www/html/index.html`
+file:
+- use an editor called nano to open the index.html page
+sudo nano /var/www/html/index.html
+- Make your changes: put the following in the text editor
+I am becoming a cloud guru
+- save the file. Press the 2 keys together. This is letter O of the alphabet
+ctlr+O
+- Exit the editor. Press the 2 keys together. This is letter X of he alphabet
+ctlr+X
+- Ensure you have exited nano
+- refresh your browser with the IP address of your default apache page to see
+the updates. You will see
+
+Cloud Technology Academy – Copyright Reserved-2024 8
+
+That’s it! You’ve successfully installed and started Apache on your Amazon EC2
+instance.
+
+Step 6: Install git
+What is git?
+Git is a version control system. It is a very important tool used by almost every
+company in the world. Git helps you to maintain di
+
+erent versions of your application.
+Git is used with GitHub. Here is a link to GitHub and feel free to create a free account
+as you will need it later in this course.
+https://github.com/
+
+1. Install Git on the Linux terminal (the black screen)
+sudo yum update -y
+sudo yum install git -y
+2. Test that git is installed
+git --version
+Output: Yours will be similar to below
+git version 2.47.1
+
+Step 7: Clone the edukate website from Git Repository
+Here’s a step-by-step guide to clone a repository from GitHub:
+
+Cloud Technology Academy – Copyright Reserved-2024 9
+
+1. Clone the Repository
+- Run the `git clone` command followed by the URL you copied:
+git clone https://github.com/igbedo/edukate.git
+2. Copy the repo files to the location where Apache webserver will server the files
+sudo mv edukate/* /var/www/html/
+
+That’s it! You’ve successfully cloned the edukate repository from GitHub.
+8. Access the edukate website from the browser
+- Refresh your browser with the IP address of your default Apache page to see
+the updates. Or follow 1 and 2 in step 5 above.
+- You will see the edukate website
+
+Cloud Technology Academy – Copyright Reserved-2024 10
+
+Step 9: Create AMI (Amazon Machine Image)
+Why Create an AMI?
+At this point, we have the edukate website deployed. We want to save our work so
+that we don't have to do all the above steps each time. The AMI is a way to save
+our work in AWS.
+Creating an AMI from an EC2 instance allows you to:
+1. Backup: Preserve the state of your instance, including its configuration,
+applications, and data.
+2. Scaling: Quickly launch new instances with the same configuration. Wer will use
+this later.
+
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to connect to. You will see the name as VM1.
+Select the square button.
+
+5. Create an AMI:
+1. With the instance selected, click the Actions button.
+2. Select image and template
+3. Select create image
+○ Image name: Enter edukate
+○ Image description: my first AMI containing edukate website
+
+Cloud Technology Academy – Copyright Reserved-2024 11
+
+4. Click Create image. AWS will start the process of creating the AMI.
+5. It will take a few minutes for your image to be ready
+5. See your new image
+On the left navigation page:
+1. - Go to Images Section
+2. - Click on AMIs
+3. You will see your image listed
+4. Check that the status says Available before proceeding to the next section
+6. Create another EC2 instance from Your AMI
+Once your AMI is available:
+● Check your image
+● Click Launch Instance from AMI
+● Here are the summary of the important steps. If you need more help, refer
+to Step 2: Create an EC2 instance with Amazon Linux AMI
+○ Name and tags (use edulate)
+○ Key pair (login)- select your key
+○ Firewall (security groups) - check http
+● Click launch instance
+
+7. Access the new edukate website from the browser
+- Follow 1 and 2 in Step 5: Test that you can access the Apache default
+website page
+
+Step 10: Clean up: Delete your EC2 instance
+It's good practice to always clean up after your lab exercises. If you don't clean up,
+you could exceed your monthly quota and get charged. Be warned!
+However, not every thing/service you create gets charged, so I will let you know
+what to delete after every class.
+For this part of the project, you need to delete EC2 instances.
+To delete EC2, do the following:
+1. Log in to the AWS Management Console
+- Go to the EC2 AWS Management Console.
+https://us-east-1.console.aws.amazon.com/ec2/
+
+Cloud Technology Academy – Copyright Reserved-2024 12
+
+- Log in with your credentials.
+2. On the left navigation page:
+- Go to Instances Section
+- Click on instances
+3. Select Your Instance:
+- Find and select the instance you want to delete
+4. Click Instance state at the top
+5. Select Terminate(delete) instance
+6. Click Terminate (delete) at the bottom of the screen
+7. Your instance will be deleted. This will take a few minutes, and it will still appear in
+your dashboard.
+8. Ensure that the Instance state says ‘Terminated’
+
+9. Delete any remaining instances by following the above steps.
+
+Conclusion
+Congratulations, you have completed part 1 of this project. You were able to do the
+following:
+1. Create a key pair
+2. Create an EC2 instance with Amazon Linux AMI
+3. Connect to the EC2 instance
+4. Install Apache Webserver using Linux commands from the CLI (Command Line
+Interface)
+5. Test that you can access the website
+6. Install git
+7. Use git to clone the edukate website from the Git Repository
+8. Move edukate to the right location for Apache to access it
+9. Access your website from the web browser
+10. Create AMI (Amazon Machine Image)
+
+Cloud Technology Academy – Copyright Reserved-2024 13
+
+Note that this website has no database backend, but we will have other projects with
+the database integrated.
+
+Part 2: Integrating ELB/ALB
+Note: Part 2 depends on the previous part 1. Be sure to complete part 1 above
+before doing this project.
+
+Elastic Load Balancing (ELB) on AWS
+A load balancer acts as the front interface connecting to numerous back end EC2
+instances. To use the back end EC2 instances, you connect through the load
+balancer.
+Connecting an Application Load Balancer (ALB) to the backend EC2 instance in AWS
+involves several steps. Here are the steps:
+1. Sign in to the AWS Management Console and open the EC2 Dashboard.
+https://us-east-1.console.aws.amazon.com/ec2/
+2. Navigate to Load balancing -> Load Balancers in the left sidebar.
+3. Click on Create Load Balancer.
+4. Select Application Load Balancer and click Create.
+5. Configure the load balance:
+- Basic Configuration:
+- Load balancer name: Enter a name for the ALB like ALB1
+- Scheme: select Internet-facing (this is the default)
+- Load balancer IP address type: Select IPv4
+- Network Mapping:
+- select multiple subnets in di
+
+erent Availability Zones for high
+
+availability. You can select the first subnets
+6. Security Groups:
+
+Cloud Technology Academy – Copyright Reserved-2024 14
+
+- Assign one or more security groups to your ALB. Select the default
+security group or create a new one. If you create a new one, Ensure the
+security group allows inbound HTTP/HTTPS tra
+
+c on the appropriate
+
+ports (80 for HTTP, 443 for HTTPS).
+8. Listeners and routing
+- Click create target group
+- Note that this will open a new tab on your browser. You will need to
+return to this tab after you create the target group
+
+1. Create a Target Group
+Configure the target group:
+Basic configuration
+- Choose a target type: select instances. This is the default
+- Target group name: enter tg1 or use any name of choice
+- Leave the rest as default
+- Click Next
+Register Targets Page: We will register targets later though you can do that
+here as well.
+- Leave everything as default and
+- Click Create Target group
+The Target group will be greeted.
+Leave this page and go back to the ‘create application load balancer’ tab
+Under the create application load balancer:
+Go to Listeners and routing section:
+- Default action:
+- Click refresh
+- Select your target group that you just created.
+Leave everything as default
+- Click Create load balancer
+Your load balancer will be provisioned. Wait for the status to be Active
+Take note of the DNS name. It will look like
+ALB1-2058799346.us-east-1.elb.amazonaws.com
+Copy this and paste somewhere that you can refer to.
+
+Cloud Technology Academy – Copyright Reserved-2024 15
+
+2. Register EC2 Instances with the Target Group
+Since we did not register instances earlier, we will register instances at this point:
+1. In the left navigation pane, go to Load balancing ->Target Groups
+2. Select the target group you created.
+3. Click on the Targets tab.
+4. Click on Register targets
+5. Select your EC2 instances
+6. Click include as pending below
+5. Click Register pending targets
+
+3. Test the Configuration
+1. You will now need the ALB name that you copy and pasted somewhere.
+2. Open up a browser and put the DNS name of the ALB on the browser
+3. If it's working as expected, you will see the edukate website that you deployed earlier
+
+Cloud Technology Academy – Copyright Reserved-2024 16
+
+Congratulations: You’ve now set up an Application Load Balancer with EC2 instance
+
+Part 3: Integrating Autoscaling Group
+The autoscaling will increase or decrease the number of EC2 instances in our
+target group depending on the tra
+
+c load to our application.
+
+To connect an EC2 instance to an Auto Scaling group on AWS, you'll need to set up an
+Auto Scaling group and configure it to launch and manage EC2 instances based on
+certain criteria. Here are the detailed steps:
+1. In the EC2 page go to Auto Scaling -> Auto Scaling Groups
+2. Click Create Auto Scaling group
+
+Auto Scaling group name: enter a name like AS1
+Launch Template: select create a launch template
+Note: This will open a new tab. You will need to go back to the Create Autoscaling
+group when you’re done with creating a launch template.
+
+Cloud Technology Academy – Copyright Reserved-2024 17
+
+1. Create a Launch Template
+Creating a launch template allows you to create a saved instance configuration that
+can be reused, shared and launched at a later time. The launch template will be used
+when scaling an instance.
+Launch Template
+1. Configure the launch template:
+○ Template Name: Enter a name for the template like LT1
+○ Application and OS Images (Amazon Machine Image) - required
+i. Click My AMIs
+ii. Owned by me
+1. Select your AMI that you created earlier
+
+○ Instance Type: select t2.micro
+○ Key Pair (login): Select the key pair. You created earlier
+○ Network and Security:
+i. Subnet: leave as default
+ii. Firewall (security groups)
+- Select existing security group. Select the Default security group
+
+○ Storage: leave as default
+2. Create Launch Template
+Your launch template will be created. Leave this page and go back to the Create Auto
+Scaling group tab
+2. Create Auto Scaling Group Page
+
+1. Under Launch template click on this symbol to refresh
+○ Select the launch template you created earlier.
+2. Click Next
+3. Choose instance launch options:
+○ Availability Zones and subnets
+○ Select the first 2 subnets. It will look like us-east-1a and us-east-1b
+4. Click Next
+5. Integrate with Other services - optional
+○ Select Attach to an existing load balancer
+○ Select Choose from your load balancer target groups
+○ Select your target group that you created earlier
+6. Click Next
+○ Don't change anything on this page
+7. Click Next
+8. Don't change anything here
+9. Click Next
+10. Don't change anything here
+11. Click Next
+
+Cloud Technology Academy – Copyright Reserved-2024 18
+
+12. Don't change anything here
+13. Click Create autoscaling Group
+
+3. Test the Configuration
+To test autoscaling, we have to be able to generate enough tra
+
+c to our website.
+You can install some utilities in the EC2 instance to generate load but this is not a
+priority ion this lab so we will skip testing.
+Once done properly, the autoscaling should work, so let's trust the process.
+
+Part 4: Register a DNS Domain on AWS and connect the
+domain to Elastic Load Balancer (ELB)
+A domain name like cloudtechnologyexperts.com allow you to use human friendly
+names to access a website instead of using IP addresses.
+Here you will register a domain in Amazon Route53. You will need to spend about $3
+to register this domain for the whole year. This lab is optional if you are not willing to
+spend that much.
+
+Step 1: Sign in to AWS Management Console
+1. https://us-east-1.console.aws.amazon.com/route53/
+2. Sign in using your AWS credentials.
+Step 3: Click on dashboard
+1. Under Register domain:
+2. Enter your domain like yourfirstnamesecondname.click (for example
+samdoe.click)
+3. Click check
+4. If the domain is available, click select
+5. Select Proceed to checkout
+6. Follow the instructions to enter your card information
+7. Click submit
+
+That’s it. You've successfully registered a DNS domain on AWS Route 53. You can now
+use Route 53 to manage your DNS records, configure routing policies, and more.
+
+Cloud Technology Academy – Copyright Reserved-2024 19
+
+Connecting Your Domain to an Elastic Load Balancer
+(ELB) on AWS
+Once you have registered your domain with AWS Route 53, connecting it to an Elastic
+Load Balancer (ELB) allows you to distribute incoming application tra
+
+c across
+
+multiple targets, such as EC2 instances.
+Here are the steps to associate your domain with an ELB using Route 53.
+
+Step 1: Create a Hosted Zone
+1. In Route 53, click on "Hosted zones" in the left-hand menu.
+2. Click "Create hosted zone."
+3. Domain name: Enter your domain name like samdoe.click
+4. select "Public hosted zone." This is the default.
+5. Click "Create hosted zone."
+Step 2: Create a Record Set
+1. In the hosted zone dashboard, click "Create record"
+2. For the "Record name" field, enter the subdomain you want to use (e.g., www).
+3. Set the "Record type" to "A – Routes tra
+
+c to IPV4 address and some AWS
+
+resources."
+4. Select/Toggle "Alias" and
+a. Then choose "Alias to Application and Classic Load Balancer."
+b. Select your Region, like US east North Virginia (us-east-1)
+c. In the "Choose Load balancer’ select your ELB from the dropdown
+menu.
+
+5. Click "Create Records" to create the record set.
+
+Step 3: Test Your Configuration
+1. Allow some time for DNS propagation, which may take a few minutes to 48
+hours but usually works in less than 5 minutes
+2. Visit your domain in a web browser to ensure it routes correctly through your
+ELB.
+
+That’s it! You’ve now connected your domain to an Elastic Load Balancer using AWS
+Route 53. This setup ensures that your application can handle tra
+c e
+ciently and
+remain highly available. If you encounter any issues, double-check your DNS settings
+and ensure that the ELB is correctly configured.
+
+Cloud Technology Academy – Copyright Reserved-2024 20
+
+Part 5: Make your website secure with SS/TLS Certificate
+This project depends on the above projects. Ensure that you have done the above
+projects before completing this project 5. It assumes that all the above steps are
+working and that you have not deleted anything.
+Here, you will create an SSL/TLS Certificate in AWS Certificate Manager and connect
+it to Your Domain in Route 53.
+Securing your website with HTTPS is crucial for protecting user data and enhancing
+trust. AWS Certificate Manager (ACM) provides an easy way to request and manage
+SSL/TLS certificates. In this project, you find step by step guides of creating a
+certificate in ACM and connecting it to your domain managed in AWS Route 53.
+
+Lab: Use AWS ACM with a Domain and ALB
+Lab Objectives
+By the end of this lab, you will:
+● Request an SSL/TLS certificate using ACM
+● Validate the domain
+● Create an Application Load Balancer
+● Attach the certificate to the ALB
+● Route tra
+
+c securely over HTTPS
+
+Prerequisites
+
+Cloud Technology Academy – Copyright Reserved-2024 21
+
+● A registered domain name (preferably managed in Route 53)
+● All the above projects have been implemented.
+
+Step 1: Request an SSL Certificate via ACM
+1. Go to the AWS Certificate Manager (ACM) console.
+https://us-east-1.console.aws.amazon.com/acm/
+2. Click "Request a certificate".
+3. Choose Request a Public certificate → Next.
+4. Enter your domain name (e.g., example.com).
+5. Select DNS validation. This is the default.
+6. Click Request.
+
+Step 2: Validate Domain Ownership in Route53
+1. In the certificate details, you'll see "Create record in Route 53".
+2. Click it and confirm → Route 53 will add the DNS validation record
+automatically.
+Wait for the validation to complete (can take a few minutes).
+
+Step 3: Add the ACM Certificate to the ALB
+1. https://us-east-1.console.aws.amazon.com/ec2/
+2. Select the ALB that you created earlier
+3. Click on Listeners and rules tab
+4. Click add listener
+5. Change http to https under protocol
+6. Under Target group, select your target group from the drop down menu
+7. Under Certificate (from ACM): Select the certificate that you created in ACM
+8. Click add
+
+Cloud Technology Academy – Copyright Reserved-2024 22
+
+9. Your HTTPS listener is now created using the certificate that you created.
+The listener will direct tra
+
+c and make it secure
+
+.
+
+Test That Your Website is now Secure
+● Go to https://yourdomain.com
+● You should see the lock icon in your browser and reach your EC2 instance via
+HTTPS.
+● Your website is now secured, meaning that the tra
+
+c between the browser and
+
+the server are encrypted for secure communication.
+
+Now that you are at the end of the project, you can clean up
+● Delete EC2
+● ELB/ALB
+● Autoscaler
+● Release ACM certificate (optional)
+
+Conclusion
+That’s it! You’ve successfully created a website on EC2, Highly available ( using ELB
+and Autoscaler) and connected to a domain (created in route53) using SSL/TLS
+certificate ( created in ACM) for secure communication. This setup ensures that your
+website is securely accessible over HTTPS, enhancing security and user trust. For any
+issues, verify DNS records and certificate status in ACM.
+This concludes the project of deploying a webserver on an EC2 instance and
+ensuring end-to-end security of your application.
+Additional Resources
+● AWS Certificate Manager Documentation
+● Route 53 Documentation
+● Elastic Load Balancer Documentation
+
+Cloud Technology Academy – Copyright Reserved-2024
