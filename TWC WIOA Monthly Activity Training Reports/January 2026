@@ -1,31 +1,72 @@
+________________________________________
 TWC WIOA Monthly Training Activity Report
-
 Participant Name: Theodore Lawrence
 Training Provider: Cloud Technology Experts
 Training Program: Cloud/DevOps Engineering
 Reporting Month: January 2026
 Instructor: Dr. Damian Igbe, PhD
 Submitted To: Ms. Crystal Norwood
-
+________________________________________
+Monthly Summary
+During January 2026, training activities focused on advancing cloud infrastructure, Linux system administration, storage services, and networking fundamentals essential for cloud engineering and DevOps career pathways. Instruction emphasized hands-on implementation of AWS services including EC2, Route 53, Load Balancers, EBS storage, S3 static website hosting, and Virtual Private Cloud (VPC) architecture. Training sessions combined conceptual instruction, live troubleshooting, and real-world demonstrations using AWS cloud environments and Linux systems.
+________________________________________
+Weekly Activity Breakdown
+________________________________________
 Week of January 10, 2026
-Training Focus: Linux Package Management & System Administration
-
-During this week, training focused on Ubuntu Linux fundamentals with emphasis on package management using APT. Instruction covered command syntax, troubleshooting errors, updating repositories, installing and removing software packages, cleaning cached files and unused dependencies, and managing services using systemctl. Additional concepts included command piping with grep and understanding localhost networking behavior. Hands-on exercises reinforced full package lifecycle management and service verification.
-
+Training Activity Conducted
+Training during this week focused on Linux package management and system administration using Ubuntu Linux. Instruction emphasized proper command syntax, troubleshooting common errors, and managing software through the Advanced Package Tool (APT).
+Key skills and topics included:
+• Updating package repositories and cache
+• Installing and removing software packages
+• Cleaning unused dependencies and cached files
+• Listing installed packages and repositories
+• Managing system services using systemctl
+• Using grep and command piping for output filtering
+• Understanding localhost and basic networking concepts
+Hands-on demonstrations reinforced full package lifecycle management and service verification techniques.
+________________________________________
 Week of January 17, 2026
-Training Focus: AWS Troubleshooting, DNS, Load Balancing & HTTPS Security
-
-This week emphasized real-world AWS infrastructure troubleshooting, including EC2 connectivity validation, Route 53 DNS configuration, Application Load Balancer target health analysis, and removal of misconfigured resources. Training included creation of hosted zone records, domain-to-load balancer mapping, and SSL certificate implementation using AWS Certificate Manager to enable HTTPS traffic. Practical exercises reinforced systematic diagnostics and secure cloud architecture design.
-
+Training Activity Conducted
+This week emphasized real-world AWS cloud infrastructure troubleshooting and secure service configuration. Students practiced diagnosing connectivity issues and configuring DNS and load balancing components.
+Key skills and topics included:
+• EC2 instance connectivity verification
+• Route 53 hosted zone configuration and DNS records
+• Application Load Balancer target group health analysis
+• Domain routing to load balancers
+• SSL/TLS certificate creation using AWS Certificate Manager
+• Enabling HTTPS traffic for secure applications
+• Systematic cloud troubleshooting methodologies
+Live demonstrations showcased real production-style problem resolution scenarios.
+________________________________________
 Week of January 24, 2026
-Training Focus: AWS Storage Services & S3 Static Website Hosting
-
-During this week, training centered on Elastic Block Store (EBS) volume creation and integration with EC2 instances, including disk partitioning, formatting, mounting, and persistent data verification. Instruction also covered AWS S3 static website configuration, troubleshooting access permissions, and applying bucket policies for public access. These activities reinforced cloud storage administration and secure content hosting.
-
+Training Activity Conducted
+Training this week focused on AWS storage services, including Elastic Block Store (EBS) and Amazon S3 static website hosting. Instruction highlighted both Linux disk management and cloud-based object storage concepts.
+Key skills and topics included:
+• Creating and attaching EBS volumes to EC2 instances
+• Identifying disks using lsblk
+• Partitioning drives with fdisk
+• Formatting file systems and mounting volumes
+• Testing data persistence
+• Configuring S3 buckets for static website hosting
+• Applying bucket policies for public access
+• Understanding snapshot backup concepts
+Hands-on exercises reinforced secure storage management and cloud data durability.
+________________________________________
 Week of January 31, 2026
-Training Focus: Networking Fundamentals & AWS VPC Architecture
+Training Activity Conducted
+This week introduced foundational networking concepts and advanced AWS network architecture using Virtual Private Cloud (VPC).
+Key skills and topics included:
+• OSI Reference Model and TCP/IP communication process
+• Data flow across network layers
+• Understanding switches, routers, and network interfaces
+• Creating AWS VPC environments from scratch
+• CIDR block planning
+• Public and private subnet creation
+• Route table configuration
+• Internet Gateway implementation
+• Network isolation and security layering
+Hands-on demonstrations validated connectivity and secure cloud network segmentation.
+________________________________________
+Overall Progress
+Throughout January 2026, training activities significantly expanded practical cloud engineering and Linux system administration skills. The progression from package management to advanced cloud infrastructure, storage integration, troubleshooting, and network architecture strengthened real-world operational readiness. These competencies directly support career development in Cloud Operations, DevOps Engineering, and modern infrastructure management.
 
-The final week of January focused on foundational networking concepts using the OSI Reference Model and TCP/IP communication principles. Training concluded with hands-on creation of AWS Virtual Private Cloud (VPC) environments, including CIDR planning, public and private subnet segmentation, route table configuration, and Internet Gateway implementation. Practical validation exercises reinforced secure and scalable cloud network design.
-
-Participant Signature: ___________________________
-Date: ___________________
